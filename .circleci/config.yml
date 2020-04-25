@@ -10,7 +10,7 @@ jobs:
       - node/with-cache:
           steps:
             - run: yarn install
-            - run: yarn build
+            - run: yarn run build
 workflows:
   build:
     jobs:
