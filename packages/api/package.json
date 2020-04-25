@@ -1,5 +1,5 @@
 {
-  "name": "property-manager",
+  "name": "api",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -11,9 +11,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@types/node": "^13.13.2",
-    "@types/react": "^16.9.34",
-    "next": "9.0.2",
+    "@types/node": "13.13.2",
+    "@types/react": "16.9.34",
+    "next": "9.3.5",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "typescript": "3.7.5"

@@ -1,12 +1,13 @@
 import React from 'react';
 import Link from 'next/link';
+import { api } from 'styleguide/components';
 
 const Home = () => {
   return (
     <div>
-      <h1>Hello Next.js</h1>
+      <h1>Hello Prospect</h1>
       <Link href='start'>
-        <a>Start</a>
+        <a>Start hello {api()}</a>
       </Link>
     </div>
   );
