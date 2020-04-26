@@ -13,7 +13,7 @@ commands:
     steps:
       - restore_cache:
           keys:
-            - yarn-{{ .Branch }}-{{ checksum "~/frontend_build/frontend/yarn.lock" }}
+            - yarn-{{ .Branch }}-{{ checksum "~/frontend_build/yarn.lock" }}
 
   cmd-fe-npm-install-dependencies:
     description: Frontend Workspaces - Install dependencies using cached npm resources.
