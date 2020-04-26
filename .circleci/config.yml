@@ -41,7 +41,7 @@ jobs:
           service: Frontend Workspaces
           working_directory: ~/frontend_build/frontend
       - cmd-fe-save-cache
-      run:
+      - run:
         name: Client - Build Next.js
         working_directory: ~/frontend_build/frontend/packages/client
         command: yarn run build
