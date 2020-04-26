@@ -29,7 +29,7 @@ commands:
 
 jobs:
   frontend-build-test:
-    # working_directory: ~/frontend_build
+    working_directory: ~/frontend_build
     docker:
       - image: 3apag/ci-node:10.16
     steps:
