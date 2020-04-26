@@ -4,7 +4,7 @@ commands:
     description: Store npm cache
     steps:
       - save_cache:
-          key: yarn-{{ .Branch }}-{{ checksum "~/frontend_build/yarn.lock" }}
+          key: yarn-{{ .Branch }}-{{ checksum "yarn.lock" }}
           paths:
             - node_modules
             - client/node_modules
@@ -14,7 +14,7 @@ commands:
     steps:
       - restore_cache:
           keys:
-            - yarn-{{ .Branch }}-{{ checksum "~/frontend_build/yarn.lock" }}
+            - yarn-{{ .Branch }}-{{ checksum "yarn.lock" }}
 
   cmd-fe-npm-install-dependencies:
     description: Frontend Workspaces - Install dependencies using cached npm resources.
@@ -26,12 +26,12 @@ commands:
     steps:
       - run:
           name: << parameters.service >> - Install dependencies
-          working_directory: << parameters.working_directory >>
+          # working_directory: << parameters.working_directory >>
           command: yarn install
 
 jobs:
   frontend-build-test:
-    working_directory: ~/frontend_build
+    # working_directory: ~/frontend_build
     docker:
       - image: 3apag/ci-node:10.16
     steps:
@@ -39,10 +39,10 @@ jobs:
       - cmd-fe-restore-cache
       - cmd-fe-npm-install-dependencies:
           service: Frontend Workspaces
-          working_directory: ~/frontend_build
+          # working_directory: ~/frontend_build
       - run:
           name: Client - Build Next.js
-          working_directory: ~/frontend_build/packages/clients
+          # working_directory: ~/frontend_build/packages/clients
           command: yarn run build
       - cmd-fe-save-cache
 
