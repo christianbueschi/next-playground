@@ -21,8 +21,6 @@ commands:
     parameters:
       service:
         type: string
-      working_directory:
-        type: string
     steps:
       - run:
           name: << parameters.service >> - Install dependencies
