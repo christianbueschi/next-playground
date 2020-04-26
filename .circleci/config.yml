@@ -6,7 +6,8 @@ commands:
       - save_cache:
           key: yarn-{{ .Branch }}-{{ checksum "~/frontend_build/yarn.lock" }}
           paths:
-            - ~/frontend_build/node_modules
+            - ~/node_modules
+            - ~/packages/client/node_modules
 
   cmd-fe-restore-cache:
     description: Restore npm cache
