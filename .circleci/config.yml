@@ -40,7 +40,7 @@ jobs:
           # working_directory: ~/frontend_build
       - run:
           name: Client - Build Next.js
-          # working_directory: ~/frontend_build/packages/clients
+          working_directory: packages/client
           command: yarn run build
       - cmd-fe-save-cache
 
