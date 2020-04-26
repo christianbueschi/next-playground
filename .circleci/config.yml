@@ -39,10 +39,10 @@ jobs:
       - cmd-fe-restore-cache
       - cmd-fe-npm-install-dependencies:
           service: Frontend Workspaces
-          working_directory: ~/frontend_build/frontend
+          working_directory: ~/frontend_build
       - run:
           name: Client - Build Next.js
-          working_directory: ~/frontend_build/frontend/packages/clients
+          working_directory: ~/frontend_build/packages/clients
           command: yarn run build
       - cmd-fe-save-cache
 
