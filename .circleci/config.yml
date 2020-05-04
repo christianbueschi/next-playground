@@ -18,11 +18,11 @@ jobs:
           working_directory: ~/frontend_build/packages/client
           command: yarn run build
       - run:
-        name: Client UI - Create Docker Image
-        working_directory: ~/frontend_build/packages/client
-        command: |
-          IMAGE=admin-ui-service
-          docker build -t client-image .
+          name: Client UI - Create Docker Image
+          working_directory: ~/frontend_build/packages/client
+          command: |
+            IMAGE=admin-ui-service
+            docker build -t client-image .
 
 workflows:
   version: 2
