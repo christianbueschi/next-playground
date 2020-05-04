@@ -1,61 +1,7 @@
 version: 2.1
 commands:
-  cmd-fe-save-cache:
-    description: Store npm cache
-    steps:
-      - save_cache:
-          key: yarn-{{ .Branch }}-{{ checksum "yarn.lock" }}
-          paths:
-            - node_modules
-            - client/node_modules
-
-  cmd-fe-restore-cache:
-    description: Restore npm cache
-    steps:
-      - restore_cache:
-          keys:
-            - yarn-{{ .Branch }}-{{ checksum "yarn.lock" }}
-
-  cmd-fe-npm-install-dependencies:
-    description: Frontend Workspaces - Install dependencies using cached npm resources.
-    parameters:
-      service:
-        type: string
-      working_directory:
-        type: string
-    steps:
-      - run:
-          name: << parameters.service >> - Install dependencies
-          working_directory: << parameters.working_directory >>
-          command: yarn install
-
-  cmd-gcp-credentials-common:
-    description: Provide GCP credentials for common environment (the one containing the docker images).
-    steps:
-      - run:
-          name: GCP credentials - COMMON
-          command: |
-            echo $GCLOUD_SERVICE_KEY_COMMON | gcloud auth activate-service-account --key-file=-
-            gcloud --quiet config set project ${GOOGLE_PROJECT_ID_COMMON}
-            gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}
-            gcloud auth configure-docker
 
 jobs:
-  frontend-build-test:
-    working_directory: ~/frontend_build
-    docker:
-      - image: 3apag/ci-node:10.16
-    steps:
-      - checkout
-      - cmd-fe-restore-cache
-      - cmd-fe-npm-install-dependencies:
-          service: Frontend Workspaces
-          working_directory: ~/frontend_build
-      - run:
-          name: Client - Build Next.js
-          working_directory: ~/frontend_build/packages/client
-          command: yarn run build
-      - cmd-fe-save-cache
   frontend-build-and-deploy-to-gcp:
     working_directory: ~/frontend_build
     docker:
@@ -63,19 +9,23 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker
-      - cmd-fe-restore-cache
-      - cmd-fe-npm-install-dependencies:
-          service: Frontend Workspaces
-          working_directory: ~/frontend_build
+      - run:
+          name: Client - Install Next.js
+          working_directory: ~/frontend_build/packages/client
+          command: yarn
       - run:
           name: Client - Build Next.js
           working_directory: ~/frontend_build/packages/client
           command: yarn run build
-      - cmd-gcp-credentials-common
+      - run:
+        name: Client UI - Create Docker Image
+        working_directory: ~/frontend_build/packages/client
+        command: |
+          IMAGE=admin-ui-service
+          docker build -t client-image .
 
 workflows:
   version: 2
   fronted-workflows:
     jobs:
-      - frontend-build-test
       - frontend-build-and-deploy-to-gcp
