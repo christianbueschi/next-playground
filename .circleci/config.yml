@@ -19,7 +19,7 @@ jobs:
           command: yarn run build
       - run:
           name: Client UI - Create Docker Image
-          working_directory: ~/frontend_build/packages/client
+          working_directory: ~/frontend_build/
           command: |
             IMAGE=admin-ui-service
             docker build -t client-image .
