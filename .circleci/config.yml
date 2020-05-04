@@ -22,7 +22,7 @@ jobs:
           working_directory: ~/frontend_build/
           command: |
             IMAGE=admin-ui-service
-            docker build -t client-image .
+            docker build -f packages/client/Dockerfile -t client-image .
 
 workflows:
   version: 2
